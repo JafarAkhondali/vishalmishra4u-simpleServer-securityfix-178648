@@ -14,6 +14,11 @@ const mimeType = {
 
 http.createServer(function(req, res){
   var uri = url.parse(req.url).pathname;
+    if (path.normalize(decodeURI(uri)) !== decodeURI(uri)) {
+        res.statusCode = 403;
+        res.end();
+        return;
+    }
   var fileName = path.join(process.cwd(),  decodeURI(uri));
   console.log('Loading ' + uri);
   var stats;
